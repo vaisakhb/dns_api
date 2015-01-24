@@ -1,5 +1,6 @@
 # dns_api
-An http api that queries mysql db and returns by default json.
+An http api written in Django that queries mysql db and returns by default json.
+Run record_dumper.py inside daemon to populate the database(thaw still in progress).
 Eg. url
 http://Domain.com:port/search?name=testdomain&TTL=3600&class=CNAME
 could give response 
