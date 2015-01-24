@@ -47,7 +47,7 @@ can give
             "ttl": "3600",
             "record_points_to": "testdomain-cname.com.\n"
         }
-    }
+    },
     {
         "Total records": 2
     },
