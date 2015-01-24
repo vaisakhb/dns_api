@@ -3,7 +3,7 @@ An http api that queries mysql db and returns by default json.
 Eg. url
 http://Domain.com:port/search?name=testdomain&TTL=3600&class=CNAME
 could give response 
-
+```
 [
     {
         "pk": 17965,
@@ -20,11 +20,11 @@ could give response
         "Total records": 1
     }
 ]
-
+```
 To check how many CNAMES are pointing to a domain, use 
 http://Domain.com:port/search?data=testdomain-cname&class=CNAME
 can give 
-
+```
 [
     {
         "pk": 17965,
@@ -53,3 +53,4 @@ can give
     },
     
 ]
+```
