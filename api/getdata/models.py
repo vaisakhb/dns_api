@@ -18,4 +18,5 @@ class record_search_ptr(models.Model):
 	ip_points_to = models.CharField(max_length=100)
 	ttl = models.CharField(max_length=100)
 	generated_on = models.DateField()
+#	generated_on = models.CharField(max_length=100)
 
