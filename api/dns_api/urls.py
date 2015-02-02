@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     #url(r'^admin/', include(admin.site.urls)),
-	url(r'^search$', search.validation),
-
+	url(r'^api/search$', search.validation),
+	url(r'^ui/', include('ui.urls')),
+#	(r'^ui$', ui.views.user_template),
+#	(r'^ui/search$', ui.views.search_template),
+#	(r'^admin/', include(admin.site.urls)),
 )

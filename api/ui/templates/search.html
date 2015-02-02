@@ -1,0 +1,58 @@
+{%extends 'base.html'%}
+{%block content%}
+<html>
+<body>
+<br>
+<br>
+<br>
+<h4> Search results</h4></br></br></br>
+<p id="data"></p>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}
+</style>
+<script>
+{% autoescape off %}
+var data = {{ search|safe }};
+{% endautoescape %}
+text = ''
+var out = "<table style=\"width:50%\">";
+out +=    "<tr>";
+out +=    "<th>Domain</th>";
+out +=    "<th>Points to</th>";
+out +=    "<th>Type</th>";
+out +=    "<th>TTL</th>";
+out +=    "<th>MX priority</th>";
+out +=    "<th>Recorded generated on</th>";
+out +=  "</tr>";
+var i 
+for ( var i = 0; i < data.records.length; i++) {
+out += "<tr><td>" +
+data.records[i].domain + 
+"</td><td>" +
+data.records[i].record_points_to +
+"</td><td>" +
+data.records[i].record +
+"</td><td>" +
+data.records[i].ttl +
+"</td><td>" +
+data.records[i].priority_mx +
+"</td><td>" +
+data.records[i].generated_on +
+"</td></tr>";
+}
+out += "</table>"
+total = data.meta.total_records
+page = data.meta.page
+records_returned = data.meta.records_returned
+out += records_returned + "returned of " + total
+document.getElementById("data").innerHTML = out
+</script>
+{%endblock%}
+
+
