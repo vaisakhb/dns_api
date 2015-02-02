@@ -1,5 +1,5 @@
 # dns_api
-An http api written in Django that queries mysql db and returns by default json.
+An http api written in Django that queries mysql db for stored dns records, and returns the matching record names in json by default.
 Run record_dumper.py inside daemon to populate the database(thaw still in progress).
 Eg:
 `:8000/api/search?name=test&ttl=60`
