@@ -33,8 +33,35 @@
 </nav>
 {% endblock %}
 <div id="content">
-{%block content %} Search content {% endblock %}
+<br>
+<br>
+<br>
+<form action="/ui/search/" method="get">
+        <input type="text" name="q">
+				<input type="hidden" name="page" value="1">
+        <input type="submit" value="Search in Name">
+<select name="type">
+  <option value="A">A</option>
+  <option value="PTR">PTR</option>
+  <option value="MX">MX</option>
+  <option value="CNAME">CNAME</option>
+</select>
+</form>
 
+<form action="/ui/search/" method="get">
+	<input type="text" name="data">
+	<input type="submit" value="Search in Data">
+	<input type="hidden" name="page" value="1">
+	<select name="type">
+	<option value="A">A</option>
+	<option value="PTR">PTR</option>
+	<option value="MX">MX</option>
+	<option value="CNAME">CNAME</option>
+</select>
+    </form>
+</br></br></br>
+
+{%block content %}  {% endblock %}
 </body>
 </html>
 
