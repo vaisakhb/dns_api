@@ -14,5 +14,6 @@ urlpatterns = patterns(
 	#(r'^home/$', views.search_template),
 	(r'^$', views.search_template),
 	(r'^search/$', views.search_data),
+	(r'^search/update/$', views.update_data)
 #	(r'^admin/', include(admin.site.urls)),
 )
