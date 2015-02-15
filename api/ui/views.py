@@ -4,7 +4,8 @@ from django.http import HttpResponse, Http404, HttpRequest
 from django.template.loader import get_template
 from django.template import Context, RequestContext
 from django.views.decorators.csrf import csrf_exempt
-import urllib, json, HTMLParser, socket
+import urllib, json, HTMLParser, socket, re, pprint, collections
+from django.core import serializers
 myhost = socket.gethostname()
 username = "Anonymouse"
 
@@ -43,8 +44,28 @@ def search_A(request, type_of_record, page):
 	usock.close()
 	return rawdata
 
+def compare(a, b):
+	return set(a) == set(b) and len(a) == len(b)
 
 @csrf_exempt
 def update_data(request):
-	POST = request.POST
-	return HttpResponse(POST)
+	new_dict = {}
+	old_dict = {}
+	return_dict = {}
+	array = []
+	for key, value in request.POST.iterlists():
+		if key.startswith("new"):
+			new_dict[key] = [str(x) for x in value]
+		elif key.startswith("old"):
+			key = re.sub("old", "new", key)
+			old_dict[key] = [str(x) for x in value]
+	for key, value in new_dict.iteritems():
+		if not compare(new_dict[key], old_dict[key]):
+			return_dict[key] =  value
+			return_dict[re.sub("new", "old", key)] = old_dict[key]
+	return HttpResponse(return_dict)
+
+
+
+
+
