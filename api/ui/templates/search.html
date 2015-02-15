@@ -16,14 +16,11 @@ th, td {
 function onEdit(btn)
 {
     var id=btn.id;
-		var before = '';
-		var after = '';
-		var input = document.getElementsByName("name"+id);
+		var input = document.getElementsByName("new"+id);
     if(btn.value=="Edit") {
 			//var input = document.getElementsByName("name"+id);
 			for(i = 0;i < input.length; i++) {
     		document.getElementById(input[i].id).removeAttribute("Readonly");
-				before += document.getElementById(input[i].id)
 			} //End of for loop
 			document.getElementById(id).value="Save";
 			
@@ -32,7 +29,6 @@ function onEdit(btn)
     if(btn.value=="Save") {
     	for(i = 0;i < input.length; i++) {
     		document.getElementById(input[i].id).setAttribute("Readonly", "readonly");
-				after += document.getElementById(input[i].id)
 			}
     	document.getElementById(id).value="Edit";
      	return false;
@@ -44,7 +40,7 @@ function onEdit(btn)
 var data = {{ search|safe }}; //search is the key defined in django view and will be substituted with the json value
 {% endautoescape %}
 text = ''
-var out = '<form id="update" method="post" action="update/">';
+var out = '<form name="display" id="update" method="post" action="update/">';
 out += "<table style=\"width:50%\">";
 out +=    "<tr>";
 out +=    "<th>Domain</th>";
@@ -60,13 +56,16 @@ var id = 0;
 for ( var i = 0; i < data.records.length; i++) {
 id = id + 1;
 out += "<tr><td>" +
-"<input readonly='readonly' name='name" + id + "' id='" + data.records[i].domain + "' value='" + data.records[i].domain + "'type='text'/>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].domain + "' value='" + data.records[i].domain + "'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].domain + "' value='" + data.records[i].domain + "'type='text'/>" +
 "</td><td>" +
-"<input readonly='readonly' name='name" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to +"'type='text'/>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to +"'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to + "'type='text'/>" +
 "</td><td>" +
 data.records[i].record +
 "</td><td>" +
-"<input readonly='readonly' name='name" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
 "</td><td>" +
 data.records[i].priority_mx +
 "</td><td>" +
