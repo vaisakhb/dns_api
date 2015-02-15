@@ -59,11 +59,13 @@ def update_data(request):
 		elif key.startswith("old"):
 			key = re.sub("old", "new", key)
 			old_dict[key] = [str(x) for x in value]
+		elif key.startswith("currenturl"):
+			return_dict[key] = [str(x) for x in value]
 	for key, value in new_dict.iteritems():
 		if not compare(new_dict[key], old_dict[key]):
 			return_dict[key] =  value
 			return_dict[re.sub("new", "old", key)] = old_dict[key]
-	return HttpResponse(return_dict)
+	return HttpResponse(return_dict.values())
 
 
 
