@@ -20,13 +20,14 @@ function onEdit(btn)
     if(btn.value=="Edit") {
 			//var input = document.getElementsByName("name"+id);
 			for(i = 0;i < input.length; i++) {
+    	//if(btn.value=="Edit") {
     		document.getElementById(input[i].id).removeAttribute("Readonly");
 			} //End of for loop
 			document.getElementById(id).value="Save";
 			
 			return false;
     }
-    if(btn.value=="Save") {
+    	if(btn.value=="Save") {
     	for(i = 0;i < input.length; i++) {
     		document.getElementById(input[i].id).setAttribute("Readonly", "readonly");
 			}
@@ -40,7 +41,7 @@ function onEdit(btn)
 var data = {{ search|safe }}; //search is the key defined in django view and will be substituted with the json value
 {% endautoescape %}
 text = ''
-var out = '<form name="display" id="update" method="post" action="update/">';
+var out = '<form name="display" id="update" method="post" action="/ui/update/">';
 out += "<table style=\"width:50%\">";
 out +=    "<tr>";
 out +=    "<th>Domain</th>";
@@ -62,7 +63,8 @@ out += "<tr><td>" +
 "<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to +"'type='text'/>" +
 "<input type='hidden' name='old" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to + "'type='text'/>" +
 "</td><td>" +
-data.records[i].record +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record + "' value='" + data.records[i].record + "'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].record + "' value='" + data.records[i].record + "'type='text'/>" +
 "</td><td>" +
 "<input readonly='readonly' name='new" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
 "<input type='hidden' name='old" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
