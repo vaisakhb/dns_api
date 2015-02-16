@@ -65,7 +65,8 @@ def update_data(request):
 		if not compare(new_dict[key], old_dict[key]):
 			return_dict[key] =  value
 			return_dict[re.sub("new", "old", key)] = old_dict[key]
-	return HttpResponse(return_dict.values())
+#	return HttpResponse(return_dict.values())
+	return render_to_response('confirm.html', {"return_dict": sorted(return_dict.iteritems())})
 
 
 
