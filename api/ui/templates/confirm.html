@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{%block content%}
+<h4> Confirm update</h4>
+<p id="data"></p>
+<script>
+var out = '';
+out += '<form name="update" id="update" method="post" action="/ui/callapi/">';
+out += '<style>';
+out += 'table, th, td {' +
+    'border: 1px solid black;' +
+    'border-collapse: collapse;' +
+'}' +
+'th, td {' +
+    'padding: 5px;' +
+'}';
+out += '</style>';
+out += '<div align="top">';
+out += '<table border=1 style="width:30%;display:inline-block">';
+out += '<tr>';
+out += '<th>Old values</th>';
+out += '</tr>';
+out += '<tr>';
+{% autoescape off %}
+{% for k, v in return_dict %}
+	{% if "old" in k %}
+var value = {{ v }};
+out += '<td>';  // value[0], {{ forloop.counter }} + '</td>';
+for (var i = 0; i < value.length; i++) {
+	out += value[i] + ' ';
+	}
+out += '</td>';
+out += "<input type='hidden' name='old" + {{ forloop.counter }} + "' id='" + {{ v }} + {{ forloop.counter }} + "' value='" + {{ v }} + "'type='text'/>";
+out += '</tr>';
+	{% endif %}
+{% endfor %}
+out += '</table>';
+out += '<table border=1 style="width:30%;display:inline-block">';
+out += '<tr>';
+out += '<th>New values</th>';
+out += '</tr>';
+out += '<tr align="justify">';
+{% for k, v in return_dict %}
+  {% if "new" in k %}
+var value = {{ v }};
+out += '<td>';
+for (var i = 0; i < value.length; i++) {
+  out += value[i] + ' ';
+  }
+out += '</td>';
+out += "<input type='hidden' name='new" + {{ forloop.counter }} + "' id='" + {{ v }} + {{ forloop.counter }} + "' value='" + {{ v }} + "'type='text'/>";
+//{{ forloop.counter }} + '</td>';
+out += '</tr>';
+  {% endif %}
+{% endfor %}
+out += '<button type="submit" class="btn btn-default">Submit</button>'
+document.getElementById("data").innerHTML = out
+{% endautoescape %}
+</script>
+
+{%endblock%}
