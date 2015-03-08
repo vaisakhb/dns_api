@@ -6,6 +6,7 @@ from django.template import Context, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import urllib, json, HTMLParser, socket, re, pprint, collections
 from django.core import serializers
+
 myhost = socket.gethostname()
 username = "Anonymouse"
 

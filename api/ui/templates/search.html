@@ -2,15 +2,6 @@
 {%block content%}
 <h4> Search results</h4>
 <p id="data"></p>
-<style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-}
-</style>
 
 <script>
 function onEdit(btn)
@@ -21,7 +12,7 @@ function onEdit(btn)
 			//var input = document.getElementsByName("name"+id);
 			for(i = 0;i < input.length; i++) {
     	//if(btn.value=="Edit") {
-    		document.getElementById(input[i].id).removeAttribute("Readonly");
+    		document.getElementById(input[i].id).removeAttribute("Readonly", "readonly");
 			} //End of for loop
 			document.getElementById(id).value="Save";
 			
@@ -34,6 +25,7 @@ function onEdit(btn)
     	document.getElementById(id).value="Edit";
      	return false;
     }
+return false
     
 } // End of Function onEdit()
 
@@ -42,37 +34,50 @@ var data = {{ search|safe }}; //search is the key defined in django view and wil
 {% endautoescape %}
 text = ''
 var out = '<form name="display" id="update" method="post" action="/ui/update/">';
-out += "<table style=\"width:50%\">";
+
+out += "<style>";
+out += ".setWidth {";
+out += "max-width: 50px";
+out += "}";
+out += "</style>";
+
+out += "<table class=\"table\">";// style=\"width:50%\">";
+out += "<thead>";
 out +=    "<tr>";
-out +=    "<th>Domain</th>";
-out +=    "<th>Points to</th>";
-out +=    "<th>Type</th>";
-out +=    "<th>TTL</th>";
-out +=    "<th>MX priority</th>";
-out +=    "<th>Recorded generated on</th>";
+out +=    "<th class=\"col-sm-3\">Domain</th>";
+out +=    "<th class=\"col-sm-3\">Points to</th>";
+out +=    "<th class=\"col-sm-2\">Type</th>";
+out +=    "<th class=\"col-sm-1\">TTL</th>";
+//out +=    "<th class=\"col-sm-1\">MX priority</th>";
+//out +=    "<th>Recorded generated on</th>";
 out += 		"<th></th>";
 out +=  "</tr>";
+out +=  "</thead>";
 var i 
 var id = 0;
 for ( var i = 0; i < data.records.length; i++) {
 id = id + 1;
 out += "<tr><td>" +
-"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].domain + "' value='" + data.records[i].domain + "'type='text'/>" +
-"<input type='hidden' name='old" + id + "' id='" + data.records[i].domain + "' value='" + data.records[i].domain + "'type='text'/>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].domain + id + "' value='" + data.records[i].domain + "'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].domain + id + "' value='" + data.records[i].domain + "'type='text'/>" +
 "</td><td>" +
-"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to +"'type='text'/>" +
-"<input type='hidden' name='old" + id + "' id='" + data.records[i].record_points_to + "' value='" + data.records[i].record_points_to + "'type='text'/>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record_points_to + id + "' value='" + data.records[i].record_points_to +"'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].record_points_to + id + "' value='" + data.records[i].record_points_to + "'type='text'/>" +
+"</td><td class='setWidth'>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record + id + "' value='" + data.records[i].record + "'type='text'/>" +
+
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].record + id + "' value='" + data.records[i].record + "'type='text'/>" +
 "</td><td>" +
-"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].record + "' value='" + data.records[i].record + "'type='text'/>" +
-"<input type='hidden' name='old" + id + "' id='" + data.records[i].record + "' value='" + data.records[i].record + "'type='text'/>" +
+"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].ttl + id + "' value='" + data.records[i].ttl + "'type='text'/>" +
+"<input type='hidden' name='old" + id + "' id='" + data.records[i].ttl + id + "' value='" + data.records[i].ttl + "'type='text'/>" +
+//"</td><td class='setWidth'>" +
+
+//data.records[i].priority_mx +
 "</td><td>" +
-"<input readonly='readonly' name='new" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
-"<input type='hidden' name='old" + id + "' id='" + data.records[i].ttl + "' value='" + data.records[i].ttl + "'type='text'/>" +
-"</td><td>" +
-data.records[i].priority_mx +
-"</td><td>" +
-data.records[i].generated_on +
-"</td><td>" +
+
+//data.records[i].generated_on +
+//"</td><td>" +
+
 "<input id='" + id + "' value='Edit' onclick='return onEdit(this)' type='button'/>" +
 "</td></tr>";
 }
