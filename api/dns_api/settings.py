@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'ui'
 )
 
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,8 +65,16 @@ DATABASES = {
 				'USER': 'root',
 				'PASSWORD': 'qazplm123',
 				'HOST': ''
+    },
+    'users': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'userdata',
+        'USER': 'root',
+        'PASSWORD': 'qazplm123',
+        'HOST': ''
     }
 }
+	
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

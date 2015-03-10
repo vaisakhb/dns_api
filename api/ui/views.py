@@ -8,9 +8,13 @@ import urllib, json, HTMLParser, socket, re, pprint, collections
 from django.core import serializers
 
 myhost = socket.gethostname()
-username = "Anonymouse"
 
+username = "Anonymouse"
 def search_template(request):
+	global username
+#	username = request.user.username
+	if 'REMOTE_USER' in request.META:
+		username = request.META['REMOTE_USER'] 
 	return render_to_response('base.html', {"username" : username})
 	
 def search_data(request):
