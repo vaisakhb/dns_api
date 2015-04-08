@@ -6,8 +6,19 @@ from django.template import Context, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import urllib, json, HTMLParser, socket, re, pprint, collections
 from django.core import serializers
-
+import yaml, os
+from itertools import izip
+import requests
 myhost = socket.gethostname()
+cwd = os.path.dirname(__file__)
+
+with open(cwd + "/config.yaml",'r') as f:
+	config_yaml=yaml.load(f)
+try:
+        write_api=config_yaml["WRITE_API"]
+except KeyError:
+        print "Config parameters not found "
+        raise SystemExit
 
 username = "Anonymouse"
 def search_template(request):
@@ -57,7 +68,7 @@ def update_data(request):
 	new_dict = {}
 	old_dict = {}
 	return_dict = {}
-	array = []
+	#array = []
 	for key, value in request.POST.iterlists():
 		if key.startswith("new"):
 			new_dict[key] = [str(x) for x in value]
@@ -74,6 +85,34 @@ def update_data(request):
 	return render_to_response('confirm.html', {"return_dict": sorted(return_dict.iteritems())})
 
 
-
-
-
+@csrf_exempt
+def callapi(request):
+	new_dict = {}
+	new_dict["add"] = []
+	old_dict = {}
+	old_dict["delete"] = []
+	return_dict = {}
+	name_array = ["name", "data", "class", "ttl"]
+	for key, value in request.POST.iterlists():
+		if key.startswith("new"):
+			tmpstr = "".join([str(x) for x in value])
+			try: 
+				i = iter(name_array)
+				b = dict(izip(i, tmpstr.split(",")))
+				
+				new_dict["add"].append(b)
+			except:
+				return HttpResponse("error")
+		elif key.startswith("old"):
+			tmpstr = "".join([str(x) for x in value])
+			try:
+				i = iter(name_array)
+				b = dict(izip(i, tmpstr.split(",")))
+				old_dict["delete"].append(b)
+			except:
+				return HttpResponse("error")
+	post_data = dict(new_dict)
+	post_data.update(old_dict)
+	payload = json.dumps(post_data)
+	r = requests.post(write_api, auth=('girish.g', 'Test234'), data=payload)
+	return HttpResponse(r)
